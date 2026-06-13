@@ -168,23 +168,39 @@ Use only as fallback. It may be a wrapper such as:
 
 Use only as fallback. `/ielN/...pdf` may return HTML even when `/ielxN/...pdf` succeeds.
 
-## Manual Institute Sign-In
+## Minimal Curl Template
 
-Supported first version:
+Use this shape for the simplest HTTP/cookie-jar path. Keep requests serial.
 
-1. Open a real browser to the IEEE document page.
-2. Let the user complete institute sign-in manually.
-3. Save or reuse the resulting session:
-   - Playwright `storage_state.json`
-   - Mozilla/curl cookie jar
-   - existing browser session, if the runtime supports it
-4. Rerun the same PDF candidate workflow with that session.
+```bash
+ARNUMBER="8662406"
+DOC_URL="https://ieeexplore.ieee.org/document/${ARNUMBER}"
+JAR="ieee-cookies.txt"
+OUT="${ARNUMBER}.pdf"
 
-Not supported yet:
+curl -L -c "$JAR" -b "$JAR" \
+  -A "Mozilla/5.0" \
+  -H "Accept: text/html,*/*" \
+  "$DOC_URL" \
+  -o "${ARNUMBER}.html"
 
-- Automated SeamlessAccess/Shibboleth/CARSI for arbitrary universities
-- Per-school login adapters
-- Storing or entering university credentials
+curl -L -c "$JAR" -b "$JAR" \
+  -A "Mozilla/5.0" \
+  -H "Accept: application/pdf,application/octet-stream;q=0.9,*/*;q=0.8" \
+  -H "Referer: ${DOC_URL}" \
+  "https://ieeexplore.ieee.org/stampPDF/getPDF.jsp?tp=&arnumber=${ARNUMBER}" \
+  -o "$OUT"
+
+head -c 4 "$OUT"
+```
+
+Success requires:
+
+```text
+%PDF
+```
+
+If the first bytes are not `%PDF`, delete or ignore the file and try the next candidate URL, such as the derived `/ielxN/...pdf` path.
 
 ## Rate Limits
 
