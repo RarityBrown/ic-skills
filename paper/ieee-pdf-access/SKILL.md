@@ -179,13 +179,13 @@ JAR="ieee-cookies.txt"
 OUT="${ARNUMBER}.pdf"
 
 curl -L -c "$JAR" -b "$JAR" \
-  -A "Mozilla/5.0" \
+  -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36" \
   -H "Accept: text/html,*/*" \
   "$DOC_URL" \
   -o "${ARNUMBER}.html"
 
 curl -L -c "$JAR" -b "$JAR" \
-  -A "Mozilla/5.0" \
+  -A "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0 Safari/537.36" \
   -H "Accept: application/pdf,application/octet-stream;q=0.9,*/*;q=0.8" \
   -H "Referer: ${DOC_URL}" \
   "https://ieeexplore.ieee.org/stampPDF/getPDF.jsp?tp=&arnumber=${ARNUMBER}" \
