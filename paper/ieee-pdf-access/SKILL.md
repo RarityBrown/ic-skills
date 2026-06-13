@@ -174,7 +174,7 @@ Use only as fallback. `/ielN/...pdf` may return HTML even when `/ielxN/...pdf` s
 
 ## Minimal Curl Template
 
-Use this shape for the simplest HTTP/cookie-jar path. Keep requests serial.
+Use this shape for the simplest HTTP/cookie-jar path. Keep requests serial. Always quote IEEE URLs because query strings contain `&`.
 
 ```bash
 ARNUMBER="8662406"
