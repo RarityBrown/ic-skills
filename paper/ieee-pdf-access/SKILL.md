@@ -27,6 +27,10 @@ Reject HTML/script responses such as:
 <APM_DO_NOT_TOUCH>
 ```
 
+## Network Permission
+
+IEEE PDF retrieval requires live network access from the local shell. Request one scoped network escalation for the serial download flow instead of repeatedly trying sandboxed network commands. If network access is already enabled, run normally without escalation.
+
 ## Fast Path Checklist
 
 1. Resolve input to IEEE `arnumber`.
